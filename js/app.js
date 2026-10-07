@@ -17,19 +17,81 @@ console.table(libros);
 
 const LIBROS_ANTIGUOS = "1800-01-01";
 
-console.log("--Todos los libros--");
-for (const libro of libros) {
-    const etiqueta = libro.fechaSalida <= LIBROS_ANTIGUOS ? "Antiguo" : "Reciente";
-    console.log(`ID: ${libro.id}, Título: ${libro.titulo}, Autor: ${libro.autor}, Género: ${libro.genero}, Tipo: ${libro.tipo}, Fecha de salida: ${libro.fechaSalida}, Descripción: ${libro.descripcion}, Etiqueta: ${etiqueta}`);
-}
-
-console.log("--- Filtro: libros tipo Novela y género distinto de Novela ---");
-let encontrados = 0;
-for (let i = 0; i < libros.length; i++) {
-    const libro = libros[i];
-    if (libro.tipo === "Novela" && libro.genero !== "Novela") {
-        console.log(`${libro.id}. ${libro.titulo} - ${libro.genero}`);
-        encontrados++;
+// Función 1: Listar todos los libros con etiqueta de territorio (antiguo/reciente)
+function listarTodos(coleccion) {
+    console.log("--Todos los libros--");
+    for (const libro of coleccion) {
+        const etiqueta = libro.fechaSalida <= LIBROS_ANTIGUOS ? "Antiguo" : "Reciente";
+        console.log(`ID: ${libro.id}, Título: ${libro.titulo}, Autor: ${libro.autor}, Género: ${libro.genero}, Tipo: ${libro.tipo}, Fecha de salida: ${libro.fechaSalida}, Descripción: ${libro.descripcion}, Etiqueta: ${etiqueta}`);
     }
 }
-console.log(`${encontrados} de ${libros.length} libros cumplen la condición`);
+
+// Función 2: Filtrar libros según una condición compuesta y un límite
+function filtrar(coleccion, limite) {
+    let encontrados = 0;
+    console.log("--- Filtro: libros tipo Novela y género distinto de Novela ---");
+    for (let i = 0; i < coleccion.length && encontrados < limite; i++) {
+        const libro = coleccion[i];
+        if (libro.tipo === "Novela" && libro.genero !== "Novela") {
+            console.log(`${libro.id}. ${libro.titulo} - ${libro.genero}`);
+            encontrados++;
+        }
+    }
+    console.log(`${encontrados} de ${coleccion.length} libros cumplen la condición`);
+    return encontrados;
+}
+
+// Función 3: Contar libros por categoría usando switch
+function contarPorCategoria(coleccion, criterio = "genero") {
+    console.log(`--- Conteo por ${criterio} ---`);
+    const conteos = {};
+    
+    for (const libro of coleccion) {
+        if (!libro.id) continue;
+        
+        let categoria;
+        switch (criterio) {
+            case "genero":
+                categoria = libro.genero;
+                break;
+            case "tipo":
+                categoria = libro.tipo;
+                break;
+            case "territorio":
+                categoria = libro.fechaSalida <= LIBROS_ANTIGUOS ? "Antiguo" : "Reciente";
+                break;
+            default:
+                console.warn(`Criterio inesperado: ${criterio}. Use 'genero', 'tipo' o 'territorio'.`);
+                return;
+        }
+        
+        if (conteos[categoria]) {
+            conteos[categoria]++;
+        } else {
+            conteos[categoria] = 1;
+        }
+    }
+    
+    for (const [categoria, cantidad] of Object.entries(conteos)) {
+        console.log(`${categoria}: ${cantidad} libro(s)`);
+    }
+}
+
+// Llamadas a cada función
+listarTodos(libros);
+
+// Filtrar dos veces con límites distintos
+console.log("\n=== Primera llamada a filtrar con límite 2 ===");
+const resultado1 = filtrar(libros, 2);
+console.log(`Devuelve: ${resultado1}\n`);
+
+console.log("=== Segunda llamada a filtrar con límite 5 ===");
+const resultado2 = filtrar(libros, 5);
+console.log(`Devuelve: ${resultado2}\n`);
+
+// Contar por categoría
+contarPorCategoria(libros, "genero");
+console.log();
+contarPorCategoria(libros, "tipo");
+console.log();
+contarPorCategoria(libros, "territorio");
