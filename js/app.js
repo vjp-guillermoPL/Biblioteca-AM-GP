@@ -22,3 +22,14 @@ for (const libro of libros) {
     const etiqueta = libro.fechaSalida <= LIBROS_ANTIGUOS ? "Antiguo" : "Reciente";
     console.log(`ID: ${libro.id}, Título: ${libro.titulo}, Autor: ${libro.autor}, Género: ${libro.genero}, Tipo: ${libro.tipo}, Fecha de salida: ${libro.fechaSalida}, Descripción: ${libro.descripcion}, Etiqueta: ${etiqueta}`);
 }
+
+console.log("--- Filtro: libros tipo Novela y género distinto de Novela ---");
+let encontrados = 0;
+for (let i = 0; i < libros.length; i++) {
+    const libro = libros[i];
+    if (libro.tipo === "Novela" && libro.genero !== "Novela") {
+        console.log(`${libro.id}. ${libro.titulo} - ${libro.genero}`);
+        encontrados++;
+    }
+}
+console.log(`${encontrados} de ${libros.length} libros cumplen la condición`);
