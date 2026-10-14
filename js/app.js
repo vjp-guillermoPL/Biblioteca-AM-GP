@@ -101,8 +101,13 @@ function EliminarLibro(coleccion, id) {
     for (let i = 0; i < coleccion.length; i++) {
         if (coleccion[i].id === id) {
             coleccion.splice(i, 1);
+            return true; // Libro eliminado
+        } else {
+            return false; // Libro no encontrado
         }
 }
+
+
 
 
 // Llamadas a cada función
