@@ -97,6 +97,7 @@ function AñadirLibro(coleccion, libro)
     coleccion.push(libro);
 }
 
+
 function EliminarLibro(coleccion, id) {
     for (let i = 0; i < coleccion.length; i++) {
         if (coleccion[i].id === id) {
@@ -105,6 +106,7 @@ function EliminarLibro(coleccion, id) {
         } else {
             return false; // Libro no encontrado
         }
+}
 }
 
 
@@ -121,6 +123,8 @@ console.log(`Devuelve: ${resultado1}\n`);
 console.log("=== Segunda llamada a filtrar con límite 5 ===");
 const resultado2 = filtrar(libros, 5);
 console.log(`Devuelve: ${resultado2}\n`);
+
+console.table(BuscarPorTexto(libros.map(libro => libro.titulo), "de"));
 
 
 
