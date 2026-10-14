@@ -91,6 +91,14 @@ function buscarPorTexto(coleccion, texto)
     return resultado;
 }
 
+function AñadirLibro(coleccion, libro)
+{
+    // Añadir libro a la coleccion
+    coleccion.push(libro);
+}
+
+
+
 
 // Llamadas a cada función
 listarTodos(libros);
