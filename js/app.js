@@ -26,6 +26,7 @@ function listarTodos(coleccion) {
     }
 }
 
+
 // Función 2: Filtrar libros según una condición compuesta y un límite
 function filtrar(coleccion, limite) {
     let encontrados = 0;
@@ -77,6 +78,20 @@ function contarPorCategoria(coleccion, criterio = "genero") {
     }
 }
 
+function buscarPorTexto(coleccion, texto)
+{
+    const buscado = texto.toLowerCase();
+    const resultado = [];
+    for (const elemento of coleccion) {
+        // si el nombre en minisculas Incluye lo buscado , añadelo a resultado
+        if (elemento.includes(buscado)) {
+            resultado.add(elemento)
+        }
+    }
+    return resultado;
+}
+
+
 // Llamadas a cada función
 listarTodos(libros);
 
@@ -89,9 +104,16 @@ console.log("=== Segunda llamada a filtrar con límite 5 ===");
 const resultado2 = filtrar(libros, 5);
 console.log(`Devuelve: ${resultado2}\n`);
 
+
+
 // Contar por categoría
 contarPorCategoria(libros, "genero");
 console.log();
 contarPorCategoria(libros, "tipo");
 console.log();
 contarPorCategoria(libros, "territorio");
+
+
+
+
+
