@@ -97,7 +97,12 @@ function AñadirLibro(coleccion, libro)
     coleccion.push(libro);
 }
 
-
+function EliminarLibro(coleccion, id) {
+    for (let i = 0; i < coleccion.length; i++) {
+        if (coleccion[i].id === id) {
+            coleccion.splice(i, 1);
+        }
+}
 
 
 // Llamadas a cada función
