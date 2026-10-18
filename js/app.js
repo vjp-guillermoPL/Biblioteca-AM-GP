@@ -85,7 +85,7 @@ function buscarPorTexto(coleccion, texto)
     for (const elemento of coleccion) {
         // si el nombre en minisculas Incluye lo buscado , añadelo a resultado
         if (elemento.includes(buscado)) {
-            resultado.add(elemento)
+            resultado.push(elemento);
         }
     }
     return resultado;
@@ -103,10 +103,41 @@ function EliminarLibro(coleccion, id) {
         if (coleccion[i].id === id) {
             coleccion.splice(i, 1);
             return true; // Libro eliminado
-        } else {
-            return false; // Libro no encontrado
         }
 }
+    return false; // Libro no encontrado
+}
+
+function estadisticas(lista) {
+    if (lista.length === 0) {
+        console.warn("No se pueden calcular estadísticas: la lista está vacía.");
+        return;
+    }
+
+    let total = 0;
+    let cantidad = 0;
+    let elementoMayor = null;
+
+    for (const elemento of lista) {
+        if (!Number.isFinite(elemento.id)) continue;
+
+        total += elemento.id;
+        cantidad++;
+        if (elementoMayor === null || elemento.id > elementoMayor.id) {
+            elementoMayor = elemento;
+        }
+    }
+
+    if (cantidad === 0) {
+        console.warn("No hay elementos con un ID numérico para calcular estadísticas.");
+        return;
+    }
+
+    const media = total / cantidad;
+    console.log(`=== Mostrar estadisticas ===`)
+    console.log(`Total de IDs: ${total}`);
+    console.log(`Media de IDs: ${media.toFixed(1)}`);
+    console.log("Elemento con el ID más alto:", elementoMayor);
 }
 
 
@@ -124,7 +155,7 @@ console.log("=== Segunda llamada a filtrar con límite 5 ===");
 const resultado2 = filtrar(libros, 5);
 console.log(`Devuelve: ${resultado2}\n`);
 
-console.table(BuscarPorTexto(libros.map(libro => libro.titulo), "de"));
+console.table(buscarPorTexto(libros.map(libro => libro.titulo).filter(titulo => typeof titulo === "string"),"de"));
 
 
 
@@ -135,7 +166,19 @@ contarPorCategoria(libros, "tipo");
 console.log();
 contarPorCategoria(libros, "territorio");
 
+// constante para facilitar las llamadas
+const libroTemporal = {
+    id: 9,
+    titulo: "Libro de prueba",
+    autor: "Autor de prueba",
+    genero: "Prueba",
+    tipo: "Novela",
+    fechaSalida: "2026-01-01",
+    descripcion: "Libro temporal para probar su alta y eliminación."
+};
+AñadirLibro(libros, libroTemporal);
+console.log("Libro añadido:", libroTemporal.titulo);
+console.log("Libro eliminado:", EliminarLibro(libros, libroTemporal.id));
 
-
-
-
+estadisticas(libros);
+estadisticas([]);
