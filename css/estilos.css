@@ -13,12 +13,12 @@ body { font-family: sans-serif; margin: 0 2rem;}
 .tarjeta-portada {
     border-color: rgb(0, 128, 26);
 }
-.table{
+.title{
     border-color:rgb(17, 255, 0);
 }
-.tr{
+p{
     border-color:rgb(243, 243, 240);
 }
-.td{
+.listado{
     border-color:rgb(0, 0, 0);
 }
