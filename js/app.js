@@ -151,7 +151,16 @@ function estadisticas(lista) {
         return tarjeta;
     }
 
+    function pintarLibros(lista) {
+        listado.replaceChildren(); // Limpiar el listado antes de pintar
+        for (const libro of lista) {
+            listado.append(crearTarjeta(libro));
+        }
+    }
+
+    pintarLibros(libros);
     
+
 
 
 

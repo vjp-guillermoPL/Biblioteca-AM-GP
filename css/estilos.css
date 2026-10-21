@@ -10,3 +10,16 @@ body { font-family: sans-serif; margin: 0 2rem;}
     border-radius: 8px;
     box-shadow: 0 1px 4px #0003;
 }
+.tarjeta-portada {
+    border-color: rgb(0, 128, 26);
+}
+.table{
+    border-color:rgb(17, 255, 0);
+
+}
+.tr{
+    border-color:rgb(243, 243, 240);
+}
+.td{
+    border-color:rgb(0, 0, 0);
+}
