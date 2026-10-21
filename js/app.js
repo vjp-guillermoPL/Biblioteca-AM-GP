@@ -138,6 +138,20 @@ function estadisticas(lista) {
     console.log(`Media de IDs: ${media.toFixed(1)}`);
     console.log("Elemento con el ID más alto:", elementoMayor);
 }
+    const listado = document.querySelector("#listado");
+
+    function crearTarjeta(libros) {
+        const tarjeta = document.createElement("article");
+        tarjeta.classList.add("tarjeta");
+        const nombre = document.createElement("h3"); 
+        nombre.textContent = libros.titulo;
+        const datos = document.createElement("p");
+        datos.textContent = `Autor: ${libros.autor} | Género: ${libros.genero} | Tipo: ${libros.tipo} | Fecha de salida: ${libros.fechaSalida}`;
+        tarjeta.append(nombre, datos);
+        return tarjeta;
+    }
+
+    
 
 
 
