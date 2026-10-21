@@ -9,7 +9,6 @@ const libros = [
     {id: 6, titulo: "Moby Dick", autor: "Herman Melville", genero: "Aventura", tipo: "Novela", fechaSalida: "1851-10-18", descripcion: "Una novela de aventuras que narra la obsesión del capitán Ahab por cazar a la gran ballena blanca Moby Dick, explorando temas de venganza, destino y la lucha del hombre contra la naturaleza."},
     {id: 7, titulo: "Orgullo y prejuicio", autor: "Jane Austen", genero: "Romance", tipo: "Novela", fechaSalida: "1813-01-28", descripcion: "Una novela romántica que sigue la historia de Elizabeth Bennet y su relación con el orgulloso Sr. Darcy, explorando temas de clase social, matrimonio y las expectativas de la sociedad."},
     {id: 8, titulo: "Romeo y Julieta", autor: "William Shakespeare", genero: "Tragedia", tipo: "Obra de teatro", fechaSalida: "1597-01-01", descripcion: "Una tragedia romántica que narra la historia de amor prohibido entre Romeo y Julieta, dos jóvenes de familias rivales en Verona, y las consecuencias trágicas de su pasión."},
-    {}
 ];
 
 console.log(`${NOMBRE_APP}: ${libros.length} libros`);
@@ -22,7 +21,7 @@ function listarTodos(coleccion) {
     console.log("--Todos los libros--");
     for (const libro of coleccion) {
         const etiqueta = libro.fechaSalida <= LIBROS_ANTIGUOS ? "Antiguo" : "Reciente";
-        console.log(`ID: ${libro.id}, Título: ${libro.titulo}, Autor: ${libro.autor}, Género: ${libro.genero}, Tipo: ${libro.tipo}, Fecha de salida: ${libro.fechaSalida}, Descripción: ${libro.descripcion}, Etiqueta: ${etiqueta}`);
+        console.log(`ID: ${libro.id}, Título: ${libro.titulo}, Autor: ${libro.autor}, Etiqueta: ${etiqueta}`);
     }
 }
 
