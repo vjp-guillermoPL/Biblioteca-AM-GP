@@ -171,6 +171,16 @@ function estadisticas(lista) {
         return copiaLista;
     }
 
+    function actualizar(coleccion, texto, criterio) {
+        let r = buscarPorTexto(coleccion, texto);
+        r = ordenar(r, criterio);
+        pintar(r);
+    }
+
+    actualizar(libros, "", "titulo");
+
+
+
 // Llamadas a cada función
 listarTodos(libros);
 
