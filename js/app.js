@@ -159,11 +159,17 @@ function estadisticas(lista) {
     }
 
     pintarLibros(libros);
-    
 
+    let textoBuscado = "";
+    let criterio="titulo";
 
-
-
+    function ordernarLista(lista, criterio) {
+        const copiaLista = [...lista]; // Crear una copia de la lista para no modificar la original
+        if (criterio === "nombre") {
+            copiaLista.sort((a,b) => a.titulo.localeCompare(b.titulo));
+        }
+        return copiaLista;
+    }
 
 // Llamadas a cada función
 listarTodos(libros);
