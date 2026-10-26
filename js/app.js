@@ -397,13 +397,14 @@ let orden = {
     asc: true
 };
 
+
 function actualizar() {
     const texto = buscador.value;
 
-    // Primero filtrar
+    // 1. Filtrar
     let lista = buscarPorTexto(libros, texto);
 
-    // Después ordenar
+    // 2. Ordenar
     if (orden.campo) {
         lista = ordenar(
             lista,
@@ -413,9 +414,14 @@ function actualizar() {
         );
     }
 
-    // Finalmente pintar
+    // Pintar los libros
     pintar(lista);
+
+    // Pintar el resumen
+    pintarResumen(lista.length);
 }
+
+
 
 function cambiarOrden(campo, tipo) {
     if (orden.campo === campo) {
@@ -430,6 +436,22 @@ function cambiarOrden(campo, tipo) {
 
     actualizar();
 }
+
+
+function pintarResumen(mostrados) {
+    const resumen = document.querySelector("#resumen");
+
+    if (mostrados > 0) {
+        resumen.textContent =
+            `Mostrando ${mostrados} de ${libros.length} libros`;
+    } else {
+        const texto = document.querySelector("#buscador").value;
+
+        resumen.textContent =
+            `No hay libros que contengan «${texto}»`;
+    }
+}
+
 
 buscador.addEventListener("input", actualizar);
 
