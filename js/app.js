@@ -180,6 +180,22 @@ function estadisticas(lista) {
     actualizar(libros, "", "titulo");
 
 
+    buscador.addEventListener("input", () => {
+        textoBuscado = buscador.value;
+        actualizar(libros, textoBuscado, criterio);
+    });
+
+    document.querySelector("#ordenNombre").addEventListener("click", () => {
+        criterio = "nombre";
+        actualizar(libros, textoBuscado, criterio);
+    });
+    document.querySelector("#ordenNumero").addEventListener("click", () => {
+        criterio = "id";
+        actualizar(libros, textoBuscado, criterio);
+    });
+
+
+
 
 // Llamadas a cada función
 listarTodos(libros);
