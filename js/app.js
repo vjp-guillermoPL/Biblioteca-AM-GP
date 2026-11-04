@@ -37,7 +37,7 @@ const libros = [
         autor: "Homero",
         genero: "Épica",
         tipo: "Poema épico",
-        fechaSalida: "-800-01-01",
+        fechaSalida: "800-01-01",
         descripcion: "Un poema épico griego que narra el viaje de Odiseo mientras intenta regresar a su hogar después de la Guerra de Troya."
     },
     {
@@ -360,12 +360,13 @@ function crearTarjeta(libro) {
 
     const fecha = document.createElement("p");
     fecha.classList.add("fecha");
-    fecha.textContent = fechaLegible(libro.fecha);
-    if (diasDesde(libros.fecha) <= DIAS_RECIENTE) {
-        tarjeta.classList.add("reciente");
-    }
-    tarjeta.append(nombre,datos, fecha);
-    tarjeta.append(nombre, datos, descripcion);
+    fecha.textContent = fechaLegible(libro.fechaSalida);
+
+if (diasDesde(libro.fechaSalida) <= DIAS_RECIENTE) {
+    tarjeta.classList.add("reciente");
+}
+
+tarjeta.append(nombre, datos, descripcion, fecha);
 
     return tarjeta;
 }
@@ -449,9 +450,7 @@ function actualizar() {
             orden.asc
         );
     }
-    else if (criterio === "fecha") {
-        copia.sort((a, b) => crearFecha(b.fecha){
-    }
+
 
     // Pintar los libros
     pintar(lista);
@@ -509,8 +508,16 @@ document
         cambiarOrden("id", "numero");
     });
 document.querySelector("#ordenFecha")
-    .addEventListener("click", () => elegirOrden("fecha"));
+    .addEventListener("click", () => {
+        orden = {
+            campo: "fechaSalida",
+            tipo: "fecha",
+            asc: false
+        };
 
+        guardarCookie("orden", JSON.stringify(orden), 30);
+        actualizar();
+    });
 // Predicción: si en la consola ejecutamos
 //     document.cookie = "tema=oscuro"
 // y después
