@@ -80,6 +80,7 @@ const libros = [
 
 const LIBROS_ANTIGUOS = "1800-01-01";
 
+const DIAS_RECIENTE = 30;
 console.log(`${NOMBRE_APP}: ${libros.length} libros`);
 console.table(libros);
 
@@ -237,7 +238,10 @@ function ordenar(
                 { sensitivity: "base" }
             );
         }
-
+        else if (criterio === "fecha") {
+            copia.sort((a, b) => crearFecha(b.fecha) - crearFecha(a.fecha));
+        
+    }
         return asc ? resultado : -resultado;
     });
 
@@ -354,10 +358,18 @@ function crearTarjeta(libro) {
     const descripcion = document.createElement("p");
     descripcion.textContent = libro.descripcion;
 
+    const fecha = document.createElement("p");
+    fecha.classList.add("fecha");
+    fecha.textContent = fechaLegible(libro.fecha);
+    if (diasDesde(libros.fecha) <= DIAS_RECIENTE) {
+        tarjeta.classList.add("reciente");
+    }
+    tarjeta.append(nombre,datos, fecha);
     tarjeta.append(nombre, datos, descripcion);
 
     return tarjeta;
 }
+
 
 // ==================================================
 // 10. PINTAR LIBROS EN LA PÁGINA
@@ -437,6 +449,9 @@ function actualizar() {
             orden.asc
         );
     }
+    else if (criterio === "fecha") {
+        copia.sort((a, b) => crearFecha(b.fecha){
+    }
 
     // Pintar los libros
     pintar(lista);
@@ -457,6 +472,7 @@ function cambiarOrden(campo, tipo) {
             asc: true
         };
     }
+
 
     guardarCookie("orden", JSON.stringify(orden), 30);
 
@@ -492,6 +508,8 @@ document
     .addEventListener("click", () => {
         cambiarOrden("id", "numero");
     });
+document.querySelector("#ordenFecha")
+    .addEventListener("click", () => elegirOrden("fecha"));
 
 // Predicción: si en la consola ejecutamos
 //     document.cookie = "tema=oscuro"
@@ -523,6 +541,21 @@ if (ordenGuardado) {
 
 // Mostrar los libros al cargar la página
 actualizar();
+
+function crearFecha(texto) {
+    return new Date(texto + "T00:00");
+}
+
+function fechaLegible(texto) {
+    return crearFecha(texto).toLocaleDateString("es-ES", 
+        { day:"numeric", month: "long", year: "numeric" }
+    );
+}
+function diasDesde(texto) {
+    const MS_DIA = 24 * 60 * 60 * 1000;
+    const ms = Date.now() - crearFecha(texto).getTime();
+    return Math.floor(ms / MS_DIA);
+}
 
 // ==================================================
 // 12. PRUEBAS DE LAS FUNCIONES EN CONSOLA
