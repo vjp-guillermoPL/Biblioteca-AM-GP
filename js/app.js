@@ -397,6 +397,30 @@ let orden = {
     asc: true
 };
 
+// ==================================================
+// 11.5. COOKIES: guardar y leer el último orden
+// ==================================================
+
+function guardarCookie(nombre, valor, dias) {
+    const segundos = dias * 24 * 60 * 60;
+    const texto = encodeURIComponent(valor);
+    document.cookie = `${nombre}=${texto}; max-age=${segundos}; path=/`;
+}
+
+function leerCookie(nombre) {
+    const partes = document.cookie.split("; ");
+
+    for (const parte of partes) {
+        const [clave, valor] = parte.split("=");
+
+        if (clave === nombre) {
+            return decodeURIComponent(valor);
+        }
+    }
+
+    return null;
+}
+
 
 function actualizar() {
     const texto = buscador.value;
@@ -434,6 +458,8 @@ function cambiarOrden(campo, tipo) {
         };
     }
 
+    guardarCookie("orden", JSON.stringify(orden), 30);
+
     actualizar();
 }
 
@@ -466,6 +492,34 @@ document
     .addEventListener("click", () => {
         cambiarOrden("id", "numero");
     });
+
+// Predicción: si en la consola ejecutamos
+//     document.cookie = "tema=oscuro"
+// y después
+//     console.log(document.cookie)
+// ¿qué sale? ¿Se borra la cookie del orden?
+//
+// Respuesta: NO se borra. Asignar a document.cookie NO reemplaza
+// todas las cookies, solo añade (o actualiza) la que se indica.
+// Veríamos algo como "orden=...; tema=oscuro" (el orden de las
+// claves puede variar). Cada asignación a document.cookie es una
+// operación de escritura sobre UNA cookie, no sobre el conjunto.
+
+// Al cargar la página, recuperamos el último orden guardado en la
+// cookie (si existe) y lo aplicamos. Si no hay cookie o está
+// mal formada, se mantiene el orden por defecto.
+const ordenGuardado = leerCookie("orden");
+
+if (ordenGuardado) {
+    try {
+        orden = JSON.parse(ordenGuardado);
+    } catch (error) {
+        console.warn(
+            "Cookie 'orden' con formato no válido:",
+            error.message
+        );
+    }
+}
 
 // Mostrar los libros al cargar la página
 actualizar();
