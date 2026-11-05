@@ -81,6 +81,17 @@ const libros = [
 const LIBROS_ANTIGUOS = "1800-01-01";
 
 const DIAS_RECIENTE = 30;
+
+// ==================================================
+// Patrones de validación (retos sesión 12)
+// ==================================================
+
+const patronCodigo = /^[A-Z]{3}-\d{4}$/;
+
+const patronTelefono = /^[6789]\d{8}$/;
+
+const patronCorreo = /^[A-Za-z0-9._-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$/;
+
 console.log(`${NOMBRE_APP}: ${libros.length} libros`);
 console.table(libros);
 
@@ -231,6 +242,9 @@ function ordenar(
 
         if (tipo === "numero") {
             resultado = Number(a[campo]) - Number(b[campo]);
+        } else if (tipo === "fecha") {
+            resultado =
+                crearFecha(a[campo]) - crearFecha(b[campo]);
         } else {
             resultado = String(a[campo]).localeCompare(
                 String(b[campo]),
@@ -238,10 +252,7 @@ function ordenar(
                 { sensitivity: "base" }
             );
         }
-        else if (criterio === "fecha") {
-            copia.sort((a, b) => crearFecha(b.fecha) - crearFecha(a.fecha));
-        
-    }
+
         return asc ? resultado : -resultado;
     });
 
@@ -362,11 +373,11 @@ function crearTarjeta(libro) {
     fecha.classList.add("fecha");
     fecha.textContent = fechaLegible(libro.fechaSalida);
 
-if (diasDesde(libro.fechaSalida) <= DIAS_RECIENTE) {
-    tarjeta.classList.add("reciente");
-}
+    if (diasDesde(libro.fechaSalida) <= DIAS_RECIENTE) {
+        tarjeta.classList.add("reciente");
+    }
 
-tarjeta.append(nombre, datos, descripcion, fecha);
+    tarjeta.append(nombre, datos, descripcion, fecha);
 
     return tarjeta;
 }
@@ -563,6 +574,112 @@ function diasDesde(texto) {
     const ms = Date.now() - crearFecha(texto).getTime();
     return Math.floor(ms / MS_DIA);
 }
+
+// ==================================================
+// 11.6. FORMULARIO DE AÑADIR LIBRO (retos sesión 12)
+// ==================================================
+// Validación en directo del campo código: muestra
+// ✓/✗ mientras escribe, igual que en retos.js.
+function validarCampo(campo, patron, salida) {
+    campo.addEventListener("input", () => {
+        if (campo.value.trim() === "") {
+            salida.textContent = "";
+            return;
+        }
+
+        if (patron.test(campo.value)) {
+            salida.textContent = "✓ válido";
+            salida.style.color = "green";
+        } else {
+            salida.textContent = "✗ no válido";
+            salida.style.color = "red";
+        }
+    });
+}
+
+const codigoNuevo = document.querySelector("#codigoNuevo");
+const okCodigo = document.querySelector("#okCodigo");
+
+validarCampo(codigoNuevo, patronCodigo, okCodigo);
+
+// Calcula el siguiente ID libre de la colección.
+function siguienteId(coleccion) {
+    let maximo = 0;
+    for (const libro of coleccion) {
+        if (
+            Number.isFinite(libro.id) &&
+            libro.id > maximo
+        ) {
+            maximo = libro.id;
+        }
+    }
+    return maximo + 1;
+}
+
+// Maneja el envío del formulario: valida el código con la
+// expresión regular y, si pasa, añade el libro con AñadirLibro.
+function anadirDesdeFormulario(evento) {
+    evento.preventDefault();
+
+    const aviso = document.querySelector("#avisoAnadir");
+    const codigo = codigoNuevo.value.trim();
+
+    // Campo validado con expresión regular:
+    // si no cumple el patrón, se avisa y no se añade.
+    if (!patronCodigo.test(codigo)) {
+        aviso.textContent =
+            "El código no cumple el formato ABC-1234 " +
+            "(tres letras mayúsculas, guion y cuatro dígitos).";
+        aviso.style.color = "red";
+        return;
+    }
+
+    const titulo = document.querySelector("#tituloNuevo").value.trim();
+    const autor = document.querySelector("#autorNuevo").value.trim();
+    const genero = document.querySelector("#generoNuevo").value.trim();
+    const tipo = document.querySelector("#tipoNuevo").value.trim();
+    const fechaSalida = document.querySelector("#fechaNuevo").value;
+    const descripcion = document.querySelector("#descripcionNuevo").value.trim();
+
+    if (
+        titulo === "" ||
+        autor === "" ||
+        genero === "" ||
+        tipo === "" ||
+        fechaSalida === ""
+    ) {
+        aviso.textContent =
+            "Faltan datos obligatorios para añadir el libro.";
+        aviso.style.color = "red";
+        return;
+    }
+
+    const nuevoLibro = {
+        id: siguienteId(libros),
+        codigo,
+        titulo,
+        autor,
+        genero,
+        tipo,
+        fechaSalida,
+        descripcion
+    };
+
+    if (AñadirLibro(libros, nuevoLibro)) {
+        aviso.textContent = `Libro añadido: ${nuevoLibro.titulo}`;
+        aviso.style.color = "green";
+        evento.target.reset();
+        okCodigo.textContent = "";
+        actualizar();
+    } else {
+        aviso.textContent = "No se pudo añadir el libro (ID duplicado).";
+        aviso.style.color = "red";
+    }
+}
+
+document
+    .querySelector("#formAnadir")
+    .addEventListener("submit", anadirDesdeFormulario);
 
 // ==================================================
 // 12. PRUEBAS DE LAS FUNCIONES EN CONSOLA

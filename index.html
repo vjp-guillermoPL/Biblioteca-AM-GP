@@ -21,6 +21,43 @@
         <button id="ordenFecha">Mas recientes primero</button>
     </section>
 
+    <section class="anadir">
+        <h2>Añadir libro</h2>
+        <form id="formAnadir" novalidate>
+            <p>
+                <label for="codigoNuevo">Código (formato ABC-1234):</label>
+                <input id="codigoNuevo" type="text" placeholder="ABC-1234" autocomplete="off">
+                <span id="okCodigo" class="validacion"></span>
+            </p>
+            <p>
+                <label for="tituloNuevo">Título:</label>
+                <input id="tituloNuevo" type="text" autocomplete="off">
+            </p>
+            <p>
+                <label for="autorNuevo">Autor:</label>
+                <input id="autorNuevo" type="text" autocomplete="off">
+            </p>
+            <p>
+                <label for="generoNuevo">Género:</label>
+                <input id="generoNuevo" type="text" autocomplete="off">
+            </p>
+            <p>
+                <label for="tipoNuevo">Tipo:</label>
+                <input id="tipoNuevo" type="text" autocomplete="off">
+            </p>
+            <p>
+                <label for="fechaNuevo">Fecha de salida (AAAA-MM-DD):</label>
+                <input id="fechaNuevo" type="date">
+            </p>
+            <p>
+                <label for="descripcionNuevo">Descripción:</label>
+                <textarea id="descripcionNuevo" rows="2"></textarea>
+            </p>
+            <button type="submit">Añadir libro</button>
+            <p id="avisoAnadir" class="aviso"></p>
+        </form>
+    </section>
+
     <p id="estadisticas"></p>
     <main id="listado"></main>
 </body>

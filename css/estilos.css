@@ -10,5 +10,19 @@ body { font-family: sans-serif; margin: 0 2rem;}
     border-radius: 8px;
     box-shadow: 0 1px 4px #0003;
 }
-.reciente {border-left: 6px solid #f26b3a; } 
+.reciente {border-left: 6px solid #f26b3a; }
 .fecha { color: #6b7785; font-size: .9rem; }
+
+.controles, .anadir { margin: 1rem 0; }
+.controles input, .controles button { padding: .4rem .6rem; }
+
+.anadir form p { margin: .4rem 0; }
+.anadir label { display: inline-block; width: 220px; }
+.anadir input, .anadir textarea {
+    padding: .3rem .5rem;
+    min-width: 240px;
+    box-sizing: border-box;
+}
+.anadir button { padding: .4rem 1rem; }
+.validacion { margin-left: .5rem; font-weight: bold; }
+.aviso { margin-top: .5rem; min-height: 1.2rem; }
