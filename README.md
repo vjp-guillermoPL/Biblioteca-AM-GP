@@ -43,5 +43,6 @@ Redacción del README.
 
 Integrantes: Ángel Montero (`vjp-angelMG1`) y Guillermo Prol (`gproll` / `1DAW-Guillermoprollopez`). Según lo indicado por el equipo, el autor de cada commit sirve como referencia de quién tecleó ese tramo de trabajo:
 
-- Ángel Montero: `cambios`, `eliminar libro` (dos commits), `añadir libro` y `buscar por texto`.
-- Guillermo Prol: `estructura inicial del proyecto`, `datos de ejemplo`, `listado completo`, `filtro por tipo`, `Refactor app.js: add listarTodos, filtrar, and contarPorCategoria functions` y `Llamada de las funciones y estadisticas`.
+- Ángel Montero: `cambios`, `eliminar libro` (dos commits), `añadir libro` y `buscar por texto`, `cambios fase 3`, `PARTE B - Reto 2: fechas en tus tarjetas`, `funcion pintarResumen`, `funcionando`, `botones ordenar nombre y ordenar numero`, `funcion actualizar`, `funcion ordenar lista`, `cambios`, `ultimos cambios`, `coleccion en la página`, `funcion crear Tarjeta`, `estilos.css` e `index.html`.
+
+- Guillermo Prol: `estructura inicial del proyecto`, `datos de ejemplo`, `listado completo`, `filtro por tipo`, `Refactor app.js: add listarTodos, filtrar, and contarPorCategoria functions`, `llamada de las funciones y estadísticas`, `Validacion` y `Guardar y leer cookies`,`estilos.css` e `index.html`.
