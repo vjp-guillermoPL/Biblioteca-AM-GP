@@ -162,7 +162,7 @@ function contarPorCategoria(coleccion, criterio = "genero") {
     const conteos = {};
 
     for (const libro of coleccion) {
-        if (!Number.isFinite(libro.id)) {
+        if (typeof libro.id !== "number" || isNaN(libro.id)) {
             continue;
         }
 
@@ -199,8 +199,8 @@ function contarPorCategoria(coleccion, criterio = "genero") {
         }
     }
 
-    for (const [categoria, cantidad] of Object.entries(conteos)) {
-        console.log(`${categoria}: ${cantidad} libro(s)`);
+    for (const categoria in conteos) {
+        console.log(`${categoria}: ${conteos[categoria]} libro(s)`);
     }
 
     return conteos;
@@ -211,7 +211,7 @@ function contarPorCategoria(coleccion, criterio = "genero") {
 // ==================================================
 
 function buscarPorTexto(coleccion, texto) {
-    const buscado = texto
+    const buscado = String(texto || "")
         .toLowerCase()
         .trim();
 
@@ -264,18 +264,15 @@ function ordenar(
 // ==================================================
 
 function AñadirLibro(coleccion, libro) {
-    if (
-        !libro ||
-        !Number.isFinite(libro.id) ||
-        coleccion.some(elemento => elemento.id === libro.id)
-    ) {
-        console.warn("Libro no válido o ID duplicado.");
+    if (!libro) {
+        console.warn("No se puede añadir un libro vacío.");
         return false;
     }
 
+    libro.id = siguienteId(coleccion);
     coleccion.push(libro);
 
-    return true;
+    return libro;
 }
 
 // ==================================================
@@ -301,54 +298,34 @@ function EliminarLibro(coleccion, id) {
 // ==================================================
 
 function estadisticas(lista) {
-    if (lista.length === 0) {
-        console.warn(
-            "No se pueden calcular estadísticas: la lista está vacía."
-        );
-        return;
-    }
+    let novelas = 0;
+    const generos = {};
 
-    let total = 0;
-    let cantidad = 0;
-    let elementoMayor = null;
-
-    for (const elemento of lista) {
-        if (!Number.isFinite(elemento.id)) {
-            continue;
+    for (const libro of lista) {
+        if (libro.tipo === "Novela") {
+            novelas++;
         }
 
-        total += elemento.id;
-        cantidad++;
-
-        if (
-            elementoMayor === null ||
-            elemento.id > elementoMayor.id
-        ) {
-            elementoMayor = elemento;
+        if (generos[libro.genero]) {
+            generos[libro.genero]++;
+        } else {
+            generos[libro.genero] = 1;
         }
     }
 
-    if (cantidad === 0) {
-        console.warn(
-            "No hay elementos con un ID numérico."
-        );
-        return;
+    let cantidadGeneros = 0;
+
+    for (const genero in generos) {
+        cantidadGeneros++;
     }
-
-    const media = total / cantidad;
-
-    console.log("=== Mostrar estadísticas ===");
-    console.log(`Total de IDs: ${total}`);
-    console.log(`Media de IDs: ${media.toFixed(1)}`);
-    console.log("Elemento con el ID más alto:", elementoMayor);
 
     return {
-        total,
-        cantidad,
-        media,
-        elementoMayor
+        totalLibros: lista.length,
+        novelas,
+        cantidadGeneros
     };
 }
+
 
 // ==================================================
 // 9. CREAR TARJETAS HTML
@@ -565,8 +542,8 @@ function crearFecha(texto) {
 }
 
 function fechaLegible(texto) {
-    return crearFecha(texto).toLocaleDateString("es-ES", 
-        { day:"numeric", month: "long", year: "numeric" }
+    return crearFecha(texto).toLocaleDateString("es-ES",
+        { day: "numeric", month: "long", year: "numeric" }
     );
 }
 function diasDesde(texto) {
@@ -607,7 +584,8 @@ function siguienteId(coleccion) {
     let maximo = 0;
     for (const libro of coleccion) {
         if (
-            Number.isFinite(libro.id) &&
+            typeof libro.id === "number" &&
+            !isNaN(libro.id) &&
             libro.id > maximo
         ) {
             maximo = libro.id;
