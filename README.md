@@ -31,6 +31,16 @@ El array actual contiene además un objeto vacío (`{}`), que no es un registro 
 - Se pueden añadir y eliminar libros de la colección.
 - Las estadísticas calculan el total y la media de los ID, y muestran el libro con el ID más alto. Si la lista está vacía, se avisa sin calcular.
 
+## Sprint 1
+
+- Se muestra la colección de libros en la página mediante tarjetas creadas con `createElement`, `textContent` y `append`.
+- Se puede buscar por texto mientras se escribe, sin distinguir mayúsculas y minúsculas.
+- Se pueden ordenar los libros por título, identificador y fecha de salida, sin modificar la colección original.
+- Se guarda en una cookie el último criterio de ordenación y se recupera al volver a cargar la página.
+- Las fechas se muestran en formato legible y los libros publicados entre hoy y los últimos 30 días se destacan visualmente.
+- El formulario permite añadir libros y valida el código con una expresión regular antes de incorporarlos.
+- Se muestra un resumen de los resultados encontrados y un mensaje cuando no hay coincidencias.
+
 ## Cómo se ejecuta
 
 Abre `index.html` en un navegador y consulta la consola de las herramientas de desarrollo (F12). El archivo carga `js/app.js`, que ejecuta los ejemplos y muestra los resultados en la consola. Las funciones también se pueden llamar desde esa consola.
