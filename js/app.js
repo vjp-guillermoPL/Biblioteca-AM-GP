@@ -33,12 +33,12 @@ const libros = [
     },
     {
         id: 4,
-        titulo: "La Odisea",
-        autor: "Homero",
-        genero: "Épica",
-        tipo: "Poema épico",
-        fechaSalida: "800-01-01",
-        descripcion: "Un poema épico griego que narra el viaje de Odiseo mientras intenta regresar a su hogar después de la Guerra de Troya."
+        titulo: "El gran Gatsby",
+        autor: "F. Scott Fitzgerald",
+        genero: "Novela",
+        tipo: "Novela",
+        fechaSalida: "1925-04-10",
+        descripcion: "Una novela que explora la decadencia y el exceso de la sociedad estadounidense durante los años 20, a través de la historia de Jay Gatsby."
     },
     {
         id: 5,
