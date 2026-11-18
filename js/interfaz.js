@@ -6,6 +6,9 @@ import { Libro } from "./libro.js";
 
 const libros = datosLibros.map(datos => new Libro(datos));
 
+console.log("El principito:", libros[0].esLargo(300));
+console.log("Cien años de soledad:", libros[1].esLargo(300));
+
 import {
     DIAS_RECIENTE,
     patronCodigo,
@@ -489,3 +492,4 @@ if (AñadirLibro(libros, libroTemporal)) {
 console.log(estadisticas(libros));
 
 console.log(estadisticas([]));
+
