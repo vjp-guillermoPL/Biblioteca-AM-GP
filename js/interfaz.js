@@ -1,7 +1,10 @@
 // js/interfaz.js
 // Funciones que interactúan con la página HTML.
 
-import { libros } from "./datos.js";
+import { datosLibros } from "./datos.js";
+import { Libro } from "./libro.js";
+
+const libros = datosLibros.map(datos => new Libro(datos));
 
 import {
     DIAS_RECIENTE,
@@ -48,13 +51,13 @@ function crearTarjeta(libro) {
 
     const descripcion = document.createElement("p");
 
-    descripcion.textContent = libro.descripcion;
+    descripcion.textContent = libro.descripcionTarjeta();
 
     const fecha = document.createElement("p");
 
     fecha.classList.add("fecha");
 
-    fecha.textContent = fechaLegible(libro.fechaSalida);
+    fecha.textContent = libro.fechaTexto;
 
     if (diasDesde(libro.fechaSalida) <= DIAS_RECIENTE) {
         tarjeta.classList.add("reciente");
@@ -299,7 +302,7 @@ function anadirDesdeFormulario(evento) {
 
 
     // Crear nuevo libro
-    const nuevoLibro = {
+    const nuevoLibro = new Libro({
         id: siguienteId(libros),
         codigo,
         titulo,
@@ -308,7 +311,7 @@ function anadirDesdeFormulario(evento) {
         tipo,
         fechaSalida,
         descripcion
-    };
+    });
 
 
     // Añadir libro
@@ -449,7 +452,7 @@ contarPorCategoria(libros, "territorio");
 // 13. PRUEBA DE AÑADIR Y ELIMINAR
 // ==================================================
 
-const libroTemporal = {
+const libroTemporal = new Libro({
     id: 9,
     titulo: "Libro de prueba",
     autor: "Autor de prueba",
@@ -457,8 +460,7 @@ const libroTemporal = {
     tipo: "Novela",
     fechaSalida: "2026-01-01",
     descripcion: "Libro temporal para probar su alta y eliminación."
-};
-
+});
 if (AñadirLibro(libros, libroTemporal)) {
 
     console.log("Libro añadido:", libroTemporal.titulo);

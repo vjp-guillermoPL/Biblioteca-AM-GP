@@ -1,7 +1,7 @@
 // js/datos.js
 // Colección de libros de la biblioteca.
 
-export const libros = [
+export const datosLibros = [
     {
         id: 1,
         titulo: "El principito",
