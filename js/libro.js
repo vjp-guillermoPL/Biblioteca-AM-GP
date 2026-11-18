@@ -8,6 +8,8 @@ export class Libro {
         this.tipo = datos.tipo;
         this.fechaSalida = datos.fechaSalida;
         this.descripcion = datos.descripcion || "";
+
+        this.paginas = datos.paginas || 0;
     }
 
     get id() {
@@ -31,5 +33,9 @@ export class Libro {
 
     descripcionTarjeta() {
         return this.descripcion;
+    }
+
+    esLargo(paginasLimite) {
+        return this.paginas > paginasLimite;
     }
 }

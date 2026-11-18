@@ -26,3 +26,14 @@ body { font-family: sans-serif; margin: 0 2rem;}
 .anadir button { padding: .4rem 1rem; }
 .validacion { margin-left: .5rem; font-weight: bold; }
 .aviso { margin-top: .5rem; min-height: 1.2rem; }
+
+.etiqueta-largo {
+    display: inline-block;
+    background-color: #397b32;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-top: 10px;
+}

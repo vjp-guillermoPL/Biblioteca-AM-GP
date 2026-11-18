@@ -59,6 +59,16 @@ function crearTarjeta(libro) {
 
     fecha.textContent = libro.fechaTexto;
 
+    if (libro.esLargo(300)) {
+    const etiqueta = document.createElement("span");
+
+    etiqueta.textContent = "Largo";
+
+    etiqueta.classList.add("etiqueta-largo");
+
+    tarjeta.append(etiqueta);
+    }
+
     if (diasDesde(libro.fechaSalida) <= DIAS_RECIENTE) {
         tarjeta.classList.add("reciente");
     }
