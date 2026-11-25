@@ -226,31 +226,26 @@ export function EliminarLibro(coleccion, id) {
 // ==================================================
 
 export function estadisticas(lista) {
-    let novelas = 0;
-    const generos = {};
+    const paginas = lista.map((libro) => libro.paginas);
 
-    for (const libro of lista) {
-        if (libro.tipo === "Novela") {
-            novelas++;
-        }
+    const paginasTotales = paginas.reduce(
+        (suma, paginas) => suma + paginas,
+        0
+    );
 
-        if (generos[libro.genero]) {
-            generos[libro.genero]++;
-        } else {
-            generos[libro.genero] = 1;
-        }
-    }
+    const novelas = lista.filter(
+        (libro) => libro.tipo === "Novela"
+    ).length;
 
-    let cantidadGeneros = 0;
-
-    for (const genero in generos) {
-        cantidadGeneros++;
-    }
+    const mediaPaginas = lista.length > 0
+        ? paginasTotales / lista.length
+        : 0;
 
     return {
         totalLibros: lista.length,
         novelas,
-        cantidadGeneros
+        paginasTotales,
+        mediaPaginas
     };
 }
 

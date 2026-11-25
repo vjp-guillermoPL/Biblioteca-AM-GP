@@ -37,3 +37,24 @@ body { font-family: sans-serif; margin: 0 2rem;}
     font-weight: bold;
     margin-top: 10px;
 }
+
+.zona-principal {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 1fr);
+    gap: 2rem;
+    align-items: start;
+}
+
+.tarjeta-estadisticas {
+    margin-top: 1rem;
+}
+
+.tarjeta-estadisticas h2 {
+    margin-top: 0;
+}
+
+@media (max-width: 700px) {
+    .zona-principal {
+        grid-template-columns: 1fr;
+    }
+}

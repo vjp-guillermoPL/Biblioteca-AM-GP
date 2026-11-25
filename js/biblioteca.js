@@ -1,5 +1,5 @@
 import { Libro } from "./libro.js";
-import { buscarPorTexto, anadir } from "./logica.js";
+import { buscarPorTexto, AñadirLibro , estadisticas } from "./logica.js";
 
 /**
  * Clase madre es la que  guarda la colección de libros y ofrece los métodos para que trabaje con ella
@@ -47,8 +47,8 @@ export class Biblioteca {
      * @param {Libro} libro aqui se añade el libro
      * @returns {number} el id que se le ha dado al libro
      */
-    anadir(libro) {
-        return anadir(this._libros, libro);
+    AñadirLibro (libro) {
+        return AñadirLibro (this._libros, libro);
     }
 
     /**
@@ -73,5 +73,14 @@ export class Biblioteca {
      */
     buscar(texto) {
         return buscarPorTexto(this._libros, texto);
+    }
+
+    /**
+     * Calcula las estadísticas de los libros.
+     * @param {Libro[]} lista - Lista que se quiere analizar.
+     * @returns {Object} Estadísticas de los libros.
+     */
+    estadisticas(lista = this._libros) {
+        return estadisticas(lista);
     }
 }

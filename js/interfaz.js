@@ -3,8 +3,10 @@
 
 import { datosLibros } from "./datos.js";
 import { Libro } from "./libro.js";
+import { Biblioteca } from "./biblioteca.js";
 
 const libros = datosLibros.map(datos => new Libro(datos));
+const biblioteca = new Biblioteca(libros);
 
 console.log("El principito:", libros[0].esLargo(300));
 console.log("Cien años de soledad:", libros[1].esLargo(300));
@@ -63,13 +65,13 @@ function crearTarjeta(libro) {
     fecha.textContent = libro.fechaTexto;
 
     if (libro.esLargo(300)) {
-    const etiqueta = document.createElement("span");
+        const etiqueta = document.createElement("span");
 
-    etiqueta.textContent = "Largo";
+        etiqueta.textContent = "Largo";
 
-    etiqueta.classList.add("etiqueta-largo");
+        etiqueta.classList.add("etiqueta-largo");
 
-    tarjeta.append(etiqueta);
+        tarjeta.append(etiqueta);
     }
 
     if (diasDesde(libro.fechaSalida) <= DIAS_RECIENTE) {
@@ -108,8 +110,13 @@ function pintar(lista) {
         }
     }
 
-    estadisticasHTML.textContent =
-        `${lista.length} libro(s) encontrado(s)`;
+    const datosEstadisticas = estadisticas(lista);
+
+    estadisticasHTML.innerHTML = `
+    <p>Libros encontrados: ${datosEstadisticas.totalLibros}</p>
+    <p>Novelas: ${datosEstadisticas.novelas}</p>
+    <p>Géneros diferentes: ${datosEstadisticas.cantidadGeneros}</p>
+`;
 }
 
 
