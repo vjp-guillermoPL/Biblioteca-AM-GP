@@ -1,5 +1,5 @@
 import { Libro } from "./libro.js";
-import { buscarPorTexto, AñadirLibro , estadisticas } from "./logica.js";
+import { buscarPorTexto, AñadirLibro, estadisticas } from "./logica.js";
 
 /**
  * Clase madre es la que  guarda la colección de libros y ofrece los métodos para que trabaje con ella
@@ -19,10 +19,7 @@ export class Biblioteca {
      * @returns {Biblioteca} Una biblioteca con un Libro por cada objeto.
      */
     static desdeDatos(datos) {
-        const libros = [];
-        for (const d of datos) {
-            libros.push(new Libro(d));
-        }
+        const libros = datos.map((d) => new Libro(d));
         return new Biblioteca(libros);
     }
 
@@ -47,8 +44,8 @@ export class Biblioteca {
      * @param {Libro} libro aqui se añade el libro
      * @returns {number} el id que se le ha dado al libro
      */
-    AñadirLibro (libro) {
-        return AñadirLibro (this._libros, libro);
+    AñadirLibro(libro) {
+        return AñadirLibro(this._libros, libro);
     }
 
     /**
@@ -57,13 +54,12 @@ export class Biblioteca {
      * @returns {boolean} true si quita el booleano y false si se añade
      */
     eliminar(id) {
-        for (let i = 0; i < this._libros.length; i++) {
-            if (this._libros[i].id === id) {
-                this._libros.splice(i, 1);
-                return true;
-            }
+        const indice = this._libros.findIndex((libro) => libro.id === id);
+        if (indice === -1) {
+            return false;
         }
-        return false;
+        this._libros.splice(indice, 1);
+        return true;
     }
 
     /**

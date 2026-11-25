@@ -80,49 +80,29 @@ export function filtrar(coleccion, limite) {
 export function contarPorCategoria(coleccion, criterio = "genero") {
     console.log(`--- Conteo por ${criterio} ---`);
 
-    const conteos = {};
-
-    for (const libro of coleccion) {
-        if (typeof libro.id !== "number" || isNaN(libro.id)) {
-            continue;
-        }
-
-        let categoria;
-
-        switch (criterio) {
-            case "genero":
-                categoria = libro.genero;
-                break;
-
-            case "tipo":
-                categoria = libro.tipo;
-                break;
-
-            case "territorio":
-                categoria =
-                    libro.fechaSalida <= LIBROS_ANTIGUOS
-                        ? "Antiguo"
-                        : "Reciente";
-                break;
-
-            default:
-                console.warn(
-                    `Criterio inesperado: ${criterio}. ` +
-                    "Usa 'genero', 'tipo' o 'territorio'."
-                );
-                return;
-        }
-
-        if (conteos[categoria]) {
-            conteos[categoria]++;
-        } else {
-            conteos[categoria] = 1;
-        }
+    if (!["genero", "tipo", "territorio"].includes(criterio)) {
+        console.warn(
+            `Criterio inesperado: ${criterio}. ` +
+            "Usa 'genero', 'tipo' o 'territorio'."
+        );
+        return;
     }
 
-    for (const categoria in conteos) {
-        console.log(`${categoria}: ${conteos[categoria]} libro(s)`);
-    }
+    const conteos = coleccion
+        .filter((libro) => typeof libro.id === "number" && !isNaN(libro.id))
+        .reduce((acc, libro) => {
+            let categoria;
+            if (criterio === "genero") categoria = libro.genero;
+            else if (criterio === "tipo") categoria = libro.tipo;
+            else categoria = libro.fechaSalida <= LIBROS_ANTIGUOS ? "Antiguo" : "Reciente";
+
+            acc[categoria] = (acc[categoria] || 0) + 1;
+            return acc;
+        }, {});
+
+    Object.entries(conteos).forEach(([categoria, cantidad]) => {
+        console.log(`${categoria}: ${cantidad} libro(s)`);
+    });
 
     return conteos;
 }
@@ -275,17 +255,11 @@ export function diasDesde(texto) {
 }
 
 export function siguienteId(coleccion) {
-    let maximo = 0;
-
-    for (const libro of coleccion) {
-        if (
-            typeof libro.id === "number" &&
-            !isNaN(libro.id) &&
-            libro.id > maximo
-        ) {
-            maximo = libro.id;
+    const maximo = coleccion.reduce((max, libro) => {
+        if (typeof libro.id === "number" && !isNaN(libro.id)) {
+            return Math.max(max, libro.id);
         }
-    }
-
+        return max;
+    }, 0);
     return maximo + 1;
 }
